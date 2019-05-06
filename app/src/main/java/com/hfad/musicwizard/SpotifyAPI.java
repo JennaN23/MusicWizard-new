@@ -22,10 +22,6 @@ public class SpotifyAPI {
         }
     }
 
-    public SpotifyAPI(Executor httpExecutor, Executor callbackExecutor) {
-        init(httpExecutor, callbackExecutor);
-    }
-
     public SpotifyAPI() {
         Executor httpExecutor = Executors.newSingleThreadExecutor();
         MainThreadExecutor callbackExecutor = new MainThreadExecutor();

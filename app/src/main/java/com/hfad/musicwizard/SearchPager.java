@@ -10,30 +10,30 @@ import retrofit.client.Response;
 
 public class SearchPager {
 
-    private final SpotifyService mSpotifyApi;
-    private int mCurrentOffset;
-    private int mPageSize;
-    private String mCurrentQuery;
+    private final SpotifyService spotifyService;
+    private int currentOffset;
+    private int currentPageSize;
+    private String currentQuery;
 
     public interface CompleteListener {
         void onComplete(List<Track> items);
         void onError(Throwable error);
     }
 
-    public SearchPager(SpotifyService spotifyApi) {
-        mSpotifyApi = spotifyApi;
+    public SearchPager(SpotifyService spotifyService) {
+        this.spotifyService = spotifyService;
     }
 
     public void getFirstPage(String query, int pageSize, CompleteListener listener) {
-        mCurrentOffset = 0;
-        mPageSize = pageSize;
-        mCurrentQuery = query;
+        currentOffset = 0;
+        currentPageSize = pageSize;
+        currentQuery = query;
         getData(query, 0, pageSize, listener);
     }
 
     public void getNextPage(CompleteListener listener) {
-        mCurrentOffset += mPageSize;
-        getData(mCurrentQuery, mCurrentOffset, mPageSize, listener);
+        currentOffset += currentPageSize;
+        getData(currentQuery, currentOffset, currentPageSize, listener);
     }
 
     private void getData(String query, int offset, final int limit, final CompleteListener listener) {
@@ -42,7 +42,7 @@ public class SearchPager {
         options.put(SpotifyService.OFFSET, offset);
         options.put(SpotifyService.LIMIT, limit);
 
-        mSpotifyApi.searchTracks(query, options, new SpotifyCallback<TracksPager>() {
+        spotifyService.searchTracks(query, options, new SpotifyCallback<TracksPager>() {
             @Override
             public void success(TracksPager tracksPager, Response response) {
                 listener.onComplete(tracksPager.tracks.items);

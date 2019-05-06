@@ -9,8 +9,8 @@ import android.support.annotation.Nullable;
 
 public class PlayerService extends Service {
 
-    private final IBinder mBinder = new PlayerBinder();
-    private PreviewPlayer mPlayer = new PreviewPlayer();
+    private final IBinder iBinder = new PlayerBinder();
+    private PreviewPlayer previewPlayer = new PreviewPlayer();
 
     public static Intent getIntent(Context context) {
         return new Intent(context, PlayerService.class);
@@ -18,19 +18,19 @@ public class PlayerService extends Service {
 
     public class PlayerBinder extends Binder {
         public Player getService() {
-            return mPlayer;
+            return previewPlayer;
         }
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return mBinder;
+        return iBinder;
     }
 
     @Override
     public void onDestroy() {
-        mPlayer.release();
+        previewPlayer.release();
         super.onDestroy();
     }
 

@@ -44,13 +44,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        // Check if result comes from the correct activity
+        // check if result comes from the correct activity
         if (requestCode == REQUEST_CODE) {
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
             switch (response.getType()) {
-                // Response was successful and contains auth token
+                // response was successful and contains auth token
                 case TOKEN:
-                    // Handle successful response
+                    // handle successful response
                     Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
                     Log.d("LoginActivity", "Success!");
                     CredentialsHandler.setToken(this, response.getAccessToken(), response.getExpiresIn(), TimeUnit.SECONDS);

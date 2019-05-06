@@ -11,7 +11,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="8dp"
-        android:contentDescription="cover" />
+        android:contentDescription="@string/album_cover" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,15 +27,6 @@
             android:scrollHorizontally="true"
             android:textAppearance="?android:attr/textAppearanceMedium"
             />
-
-        <TextView
-            android:id="@+id/textview_searchresultitem_subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="top"
-            android:scrollHorizontally="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     </LinearLayout>
 

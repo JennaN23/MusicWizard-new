@@ -16,32 +16,30 @@ import kaaes.spotify.webapi.android.models.Track;
 public class SearchPresenter implements Search.ActionListener {
 
     private static final String TAG = "SearchPresenter";
-    public static final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 20;
 
     private final Context context;
-    private final Search.View mView;
-    private String mCurrentQuery;
-
-    private SearchPager mSearchPager;
-    private SearchPager.CompleteListener mSearchListener;
-
-    private Player mPlayer;
+    private final Search.View view;
+    private String currentQuery;
+    private SearchPager searchPager;
+    private SearchPager.CompleteListener completeListener;
+    private Player player;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mPlayer = ((PlayerService.PlayerBinder) service).getService();
+            player = ((PlayerService.PlayerBinder) service).getService();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mPlayer = null;
+            player = null;
         }
     };
 
     public SearchPresenter(Context context, Search.View view) {
         this.context = context;
-        mView = view;
+        this.view = view;
     }
 
     @Override
@@ -55,7 +53,7 @@ public class SearchPresenter implements Search.ActionListener {
             logError("No valid access token");
         }
 
-        mSearchPager = new SearchPager(spotifyAPI.getService());
+        searchPager = new SearchPager(spotifyAPI.getService());
 
         context.bindService(PlayerService.getIntent(context), mServiceConnection, Activity.BIND_AUTO_CREATE);
     }
@@ -63,14 +61,14 @@ public class SearchPresenter implements Search.ActionListener {
 
     @Override
     public void search(@Nullable String searchQuery) {
-        if (searchQuery != null && !searchQuery.isEmpty() && !searchQuery.equals(mCurrentQuery)) {
+        if (searchQuery != null && !searchQuery.isEmpty() && !searchQuery.equals(currentQuery)) {
             logMessage("query text submit " + searchQuery);
-            mCurrentQuery = searchQuery;
-            mView.reset();
-            mSearchListener = new SearchPager.CompleteListener() {
+            currentQuery = searchQuery;
+            view.reset();
+            completeListener = new SearchPager.CompleteListener() {
                 @Override
                 public void onComplete(List<Track> items) {
-                    mView.addData(items);
+                    view.addData(items);
                 }
 
                 @Override
@@ -78,7 +76,7 @@ public class SearchPresenter implements Search.ActionListener {
                     logError(error.getMessage());
                 }
             };
-            mSearchPager.getFirstPage(searchQuery, PAGE_SIZE, mSearchListener);
+            searchPager.getFirstPage(searchQuery, PAGE_SIZE, completeListener);
         }
     }
 
@@ -91,7 +89,7 @@ public class SearchPresenter implements Search.ActionListener {
     @Override
     @Nullable
     public String getCurrentQuery() {
-        return mCurrentQuery;
+        return currentQuery;
     }
 
     @Override
@@ -107,7 +105,7 @@ public class SearchPresenter implements Search.ActionListener {
     @Override
     public void loadMoreResults() {
         Log.d(TAG, "Load more...");
-        mSearchPager.getNextPage(mSearchListener);
+        searchPager.getNextPage(completeListener);
     }
 
     @Override
@@ -119,16 +117,16 @@ public class SearchPresenter implements Search.ActionListener {
             return;
         }
 
-        if (mPlayer == null) return;
+        if (player == null) return;
 
-        String currentTrackUrl = mPlayer.getCurrentTrackURL();
+        String currentTrackUrl = player.getCurrentTrackURL();
 
         if (currentTrackUrl == null || !currentTrackUrl.equals(previewUrl)) {
-            mPlayer.play(previewUrl);
-        } else if (mPlayer.isPlaying()) {
-            mPlayer.pause();
+            player.play(previewUrl);
+        } else if (player.isPlaying()) {
+            player.pause();
         } else {
-            mPlayer.resume();
+            player.resume();
         }
     }
 

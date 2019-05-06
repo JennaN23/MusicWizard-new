@@ -27,13 +27,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView textViewTitle;
-        private TextView textViewSubtitle;
         private ImageView image;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.textview_searchresultitem_title);
-            textViewSubtitle = itemView.findViewById(R.id.textview_searchresultitem_subtitle);
             image = itemView.findViewById(R.id.imageview_searchresultitem);
             itemView.setOnClickListener(this);
         }

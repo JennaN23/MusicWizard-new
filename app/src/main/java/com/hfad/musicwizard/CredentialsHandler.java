@@ -7,13 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 public class CredentialsHandler {
 
-    /*
-    public static final String CLIENT_ID = "22cf013cdf864bd7b350e83083465460";
-    public static final String REDIRECT_URI = "testschema://callback";
-    public static SpotifyAppRemote mSpotifyAppRemote;
-    */
-    private static final String API_KEY = "AIzaSyBmUKMqLx3T_3LHzGvZCQbW2ThUjz4kCO0";
-
     private static final String ACCESS_TOKEN_NAME = "webapi.credentials.access_token";
     private static final String ACCESS_TOKEN = "access_token";
     private static final String EXPIRES_AT = "expires_at";
