@@ -5,15 +5,6 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="bottom"
-        android:layout_weight="1"
-        android:paddingTop="20dp"
-        app:menu="@menu/navigation" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,14 +17,28 @@
             android:layout_height="wrap_content"
             app:iconifiedByDefault="false" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview_mainactivity_searchresults"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            tools:layout_editor_absoluteX="-78dp"
-            tools:layout_editor_absoluteY="86dp" />
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_mainactivity_searchresults"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                tools:layout_editor_absoluteX="-78dp"
+                tools:layout_editor_absoluteY="86dp" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:menu="@menu/navigation" />
 
     </LinearLayout>
 

@@ -81,10 +81,9 @@ public class MainActivity extends AppCompatActivity implements Search.View {
 
         // setup search field
         searchView = findViewById(R.id.searchview_mainactivity_search);
-        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 actionListener.search(query);
                 searchView.clearFocus();
                 return true;
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements Search.View {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-        };
+        });
 
         // setup search results list
         adapter = new SearchResultAdapter(this, new SearchResultAdapter.ItemSelectedListener() {
@@ -161,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements Search.View {
             if (error instanceof NotLoggedInException || error instanceof UserNotAuthorizedException) {
                 // Show login button and trigger the login flow from auth library when clicked
             } else if (error instanceof CouldNotFindSpotifyApp) {
-                // Show button to download Spotify
+                // Show button to download SpotifyAPI
             }
         }
     };

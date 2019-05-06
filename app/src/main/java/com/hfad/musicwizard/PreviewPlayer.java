@@ -72,8 +72,7 @@ public class PreviewPlayer implements Player, MediaPlayer.OnCompletionListener {
 
     @Override
     public boolean isPlaying() {
-        boolean isPlaying = (mediaPlayer != null && mediaPlayer.isPlaying());
-        return isPlaying;
+        return (mediaPlayer != null && mediaPlayer.isPlaying());
     }
 
     private void createMediaPlayer(String url) throws IOException {
